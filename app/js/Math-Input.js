@@ -1,5 +1,5 @@
 const tl = gsap.timeline({ defaults: { duration: 1 } });
-// const p = console.log;
+const p = console.log;
 const result = document.querySelector('.result');
 const btnHolder = document.querySelector('.btn-holder');
 const clear = document.getElementById('clear');
@@ -36,6 +36,7 @@ start();
 
 const form = document.querySelector('form');
 const inputs = document.querySelectorAll('input[name]');
+let myNum = [];
 
 clear.addEventListener('click', () => {
 	inputs.forEach(input => (input.value = ''));
@@ -45,7 +46,18 @@ clear.addEventListener('click', () => {
 
 btnHolder.addEventListener('click', e => {
 	let target = e.target.id;
-	let myNum = Array.from(inputs).map(num => Number(num.value));
+	myNum = Array.from(inputs).map(num => Number(num.value));
+	p(myNum);
+	let sumOfMyNumbers = myNum.reduce((a, c) => a + c);
+	if (sumOfMyNumbers == 0) {
+		result.innerHTML = 'At least two numbers are required.';
+		return;
+	} else if (myNum.find(num => num > 0) == sumOfMyNumbers) {
+		result.innerHTML = 'One more. Come on.';
+		return;
+	} else {
+		result.innerHTML = '';
+	}
 	let sum = 0;
 	switch (target) {
 		case 'add':
